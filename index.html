@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Dashboard</title>
+    <!-- Include Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Responsive and styling with basic CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .dashboard > div {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+        .chart {
+            height: 300px;
+            position: relative;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .data-table th {
+            background: #f0f0f0;
+        }
+        .form {
+            padding: 20px;
+            background: white;
+        }
+        .form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        .form button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form button:hover {
+            background: #218838;
+        }
+        .form .error {
+            color: red;
+            font-size: 0.9em;
+            height: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Dashboard</h1>
+
+    <div class="dashboard">
+        <!-- Chart section -->
+        <div class="chart">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <!-- Data table section -->
+        <div>
+            <h2>Data Table</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Occupation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>28</td>
+                        <td>Software Engineer</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Doe</td>
+                        <td>26</td>
+                        <td>Data Analyst</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Contact form section -->
+        <div class="form">
+            <h2>Contact Form</h2>
+            <input type="text" id="name" placeholder="Your Name">
+            <div id="name-error" class="error"></div>
+            <input type="email" id="email" placeholder="Your Email">
+            <div id="email-error" class="error"></div>
+            <button id="submit-btn">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        // Create a simple chart using Chart.js
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+
+        // Simple form validation
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var isValid = true;
+
+            document.getElementById('name-error').textContent = '';
+            document.getElementById('email-error').textContent = '';
+
+            if (name === '') {
+                document.getElementById('name-error').textContent = 'Name is required.';
+                isValid = false;
+            }
+
+            if (email === '') {
+                document.getElementById('email-error'). textContent = 'Email is required.';
+                isValid = false;
+            } else if (!/^[\w-]+(\.[\w-]+)*@\w+\.\w+$/.test(email)) {
+                document.getElementById('email-error').textContent = 'Invalid email format.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+        });
+    </script>
+</body>
+</html>
